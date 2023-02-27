@@ -1,6 +1,6 @@
 package com.example.kanban.config;
 
-import com.example.kanban.model.User;
+import com.example.kanban.model.User.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

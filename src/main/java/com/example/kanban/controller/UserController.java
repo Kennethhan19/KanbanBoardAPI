@@ -1,11 +1,10 @@
 package com.example.kanban.controller;
 
-import com.example.kanban.model.Role;
-import com.example.kanban.model.UserLogin;
+import com.example.kanban.model.User.UserLogin;
 import com.example.kanban.model.AuthToken;
-import com.example.kanban.model.User;
-import com.example.kanban.service.AuthService;
-import com.example.kanban.service.UserService;
+import com.example.kanban.model.User.User;
+import com.example.kanban.service.Auth.AuthService;
+import com.example.kanban.service.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,6 +70,11 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserByUsername(username).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Username not found")));
     }
 
+    @GetMapping("/board/{boardId}")
+    public ResponseEntity<List<User>> getUsersByBoards(@PathVariable Long boardId){
+        return ResponseEntity.ok(userService.getUsersByBoards(boardId));
+    }
+
     @PutMapping("/update")
     public ResponseEntity<User>  updateUser(@RequestBody User user,@AuthenticationPrincipal User principal){
         Optional<User> userEmail = userService.getUserByEmail(user.getEmail());
@@ -93,8 +97,7 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<User>  updateAnyUser(@PathVariable Long id, @RequestBody User user,@AuthenticationPrincipal User principal) {
-//        if(principal.getRole() == Role.ADMIN) {
+    public ResponseEntity<User>  updateAnyUser(@PathVariable Long id, @RequestBody User user) {
             Optional<User> userEmail = userService.getUserByEmail(user.getEmail());
             Optional<User> userName = userService.getUserByUsername(user.getUsername());
             String password = user.getPassword();
@@ -112,19 +115,12 @@ public class UserController {
             }
 
             return ResponseEntity.ok(userService.updateUserInfo(id, user));
-//        }else{
-//            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User is not admin");
-//        }
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<HttpStatus> deleteAnyUserById(@PathVariable Long id, @AuthenticationPrincipal User principal) {
-//        if(principal.getRole() == Role.ADMIN) {
+    public ResponseEntity<HttpStatus> deleteAnyUserById(@PathVariable Long id) {
             userService.deleteUser(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }else{
-//            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User is not admin");
-//        }
     }
 
     @DeleteMapping("/delete")

@@ -1,5 +1,7 @@
-package com.example.kanban.model;
+package com.example.kanban.model.Task;
 
+import com.example.kanban.model.Board.Board;
+import com.example.kanban.model.User.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +27,7 @@ public class Task {
     @GeneratedValue
     private Long id;
 
-    @NotNull(message = "Title cannot be empty")
+    @NotNull
     private String title;
 
     private String description;
@@ -40,6 +42,11 @@ public class Task {
     @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "board_id")
+    private Board board;
 
     @Enumerated(EnumType.STRING)
     @Column(name="status")

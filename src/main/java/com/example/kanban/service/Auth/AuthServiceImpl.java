@@ -1,9 +1,9 @@
-package com.example.kanban.service;
+package com.example.kanban.service.Auth;
 
 import com.example.kanban.config.JwtService;
-import com.example.kanban.model.UserLogin;
+import com.example.kanban.model.User.UserLogin;
 import com.example.kanban.model.AuthToken;
-import com.example.kanban.model.User;
+import com.example.kanban.model.User.User;
 import com.example.kanban.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

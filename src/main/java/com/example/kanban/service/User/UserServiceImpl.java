@@ -1,10 +1,10 @@
-package com.example.kanban.service;
+package com.example.kanban.service.User;
 
 import com.example.kanban.config.JwtService;
 import com.example.kanban.model.AuthToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import com.example.kanban.model.User;
+import com.example.kanban.model.User.User;
 import com.example.kanban.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -44,15 +44,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> getUserByEmail(String email){
+        Optional<User> user = userRepository.findByEmail(email);
+        return user;
+    }
+
+    @Override
     public Optional<User> getUserByUsername(String username){
         Optional<User> user = userRepository.findByUsername(username);
         return user;
     }
 
     @Override
-    public Optional<User> getUserByEmail(String email){
-        Optional<User> user = userRepository.findByEmail(email);
-        return user;
+    public List<User> getUsersByBoards(Long boardId){
+        return userRepository.findByBoards_Id(boardId);
     }
 
     @Override

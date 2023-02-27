@@ -1,5 +1,8 @@
-package com.example.kanban.model;
+package com.example.kanban.model.User;
 
+import com.example.kanban.model.Board.Board;
+import com.example.kanban.model.Task.Task;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,14 +27,14 @@ public class User implements UserDetails{
     @GeneratedValue
     private Long id;
 
-    @NotNull(message = "Username cannot be empty")
+    @NotNull
     private String username;
 
-    @NotNull(message = "Email cannot be empty")
+    @NotNull
     @Email(message = "Email should be valid")
     private String email;
 
-    @NotNull(message = "Password cannot be empty")
+    @NotNull
 //    @Length(min = 8, message = "Password should be at least 8 characters long")
 //    Length min is not useful here because after encryption it will be > 8
     private String password;
@@ -42,7 +45,12 @@ public class User implements UserDetails{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Task> tasks;
 
-    @NotNull(message = "Please assign role")
+    @ManyToMany
+    @JoinColumn(name = "boards_id")
+    @JsonIgnore
+    private List<Board> boards;
+
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Role role;
 

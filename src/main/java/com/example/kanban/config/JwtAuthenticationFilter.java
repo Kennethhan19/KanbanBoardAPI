@@ -1,7 +1,7 @@
 package com.example.kanban.config;
 
-import com.example.kanban.model.User;
-import com.example.kanban.service.UserService;
+import com.example.kanban.model.User.User;
+import com.example.kanban.service.User.UserService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

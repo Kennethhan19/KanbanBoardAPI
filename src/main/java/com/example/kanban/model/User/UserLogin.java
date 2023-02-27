@@ -1,4 +1,4 @@
-package com.example.kanban.model;
+package com.example.kanban.model.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
