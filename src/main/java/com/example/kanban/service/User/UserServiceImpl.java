@@ -2,6 +2,7 @@ package com.example.kanban.service.User;
 
 import com.example.kanban.config.JwtService;
 import com.example.kanban.model.AuthToken;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.example.kanban.model.User.User;
@@ -17,19 +18,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private JwtService jwtService;
-
-    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
-
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
 
     @Override
-    public AuthToken registerNewUser(User user){
+    public User registerNewUser(User user){
         String password = user.getPassword();
         user.setPassword(encoder.encode(password));
-        userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        return AuthToken.builder().token(jwtToken).build();
+        User newUser = userRepository.save(user);
+        return newUser;
     }
 
     @Override

@@ -26,7 +26,7 @@ public class UserController {
     private AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthToken> registerUser(@RequestBody User user) {
+    public ResponseEntity<User> registerUser(@RequestBody User user) {
         Optional<User> userEmail = userService.getUserByEmail(user.getEmail());
         Optional<User> userName = userService.getUserByUsername(user.getUsername());
         String password = user.getPassword();
