@@ -2,7 +2,11 @@ package com.example.kanban.model.User;
 
 import com.example.kanban.model.Board.Board;
 import com.example.kanban.model.Task.Task;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -52,9 +56,11 @@ public class User implements UserDetails{
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @JsonProperty("role")
     private Role role;
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
